@@ -1,0 +1,65 @@
+---
+import type { Post } from '../lib/posts';
+import { fmtMonthDay, readingMinutes } from '../lib/posts';
+
+interface Props { posts: Post[] }
+const { posts } = Astro.props;
+
+const byYear = new Map<number, Post[]>();
+for (const p of posts) {
+  const y = p.data.pubDate.getFullYear();
+  byYear.set(y, [...(byYear.get(y) ?? []), p]);
+}
+---
+{byYear.size === 0 && <p class="empty">아직 글이 없습니다.</p>}
+{[...byYear].map(([year, list]) => (
+  <section class="year">
+    <h2>{year}</h2>
+    <ol>
+      {list.map((post) => (
+        <li class="row">
+          <time datetime={post.data.pubDate.toISOString()}>{fmtMonthDay(post.data.pubDate)}</time>
+          <div class="body">
+            <h3>
+              <a href={`/posts/${post.id}/`}>{post.data.title}</a>
+              {post.data.draft && <span class="draft">draft</span>}
+            </h3>
+            <p>{post.data.description}</p>
+            <div class="foot">
+              <span class="meta">{readingMinutes(post.body)}분</span>
+              {post.data.tags.length > 0 && (
+                <ul class="chips">{post.data.tags.map((t) => <li><a class="chip" href={`/tags/${t}/`}>{t}</a></li>)}</ul>
+              )}
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+))}
+
+<style>
+  .empty { color: var(--faint); }
+  .year { margin-bottom: 48px; }
+  .year h2 { font-size: 13px; font-weight: 700; letter-spacing: .14em; color: var(--faint); margin: 0 0 8px; }
+  ol { list-style: none; margin: 0; padding: 0; }
+  .row {
+    position: relative; display: grid; grid-template-columns: 64px 1fr; gap: 16px;
+    padding: 18px 20px; margin: 0 -20px; border-radius: 10px; transition: background .2s, box-shadow .2s, opacity .2s;
+  }
+  ol:hover .row:not(:hover) { opacity: .55; }
+  .row:hover { background: var(--card-hover); box-shadow: inset 0 1px 0 0 var(--card-edge); }
+  time { font-size: 13px; font-weight: 600; color: var(--faint); padding-top: 4px; font-variant-numeric: tabular-nums; }
+  h3 { margin: 0 0 4px; font-size: 18px; font-weight: 650; line-height: 1.45; letter-spacing: -.01em; }
+  h3 a { color: var(--strong); transition: color .15s; }
+  h3 a::after { content: ""; position: absolute; inset: 0; border-radius: 10px; }
+  .row:hover h3 a { color: var(--accent); }
+  .draft { font-size: 11px; font-weight: 600; margin-left: 8px; padding: 1px 6px; border: 1px solid var(--faint); color: var(--faint); border-radius: 4px; vertical-align: 3px; }
+  p { margin: 0; font-size: 15px; }
+  .foot { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 10px; }
+  .chips { position: relative; z-index: 1; }
+  @media (max-width: 640px) {
+    .row { grid-template-columns: 1fr; gap: 2px; margin: 0 -12px; padding: 14px 12px; }
+    ol:hover .row:not(:hover) { opacity: 1; }
+  }
+</style>

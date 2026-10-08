@@ -1,34 +1,36 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import { SITE_DESCRIPTION } from '../consts';
+import PostList from '../components/PostList.astro';
+import { getPosts, getTags } from '../lib/posts';
+import { SITE_DESCRIPTION, RESUME_URL } from '../consts';
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const fmt = (d: Date) => d.toISOString().slice(0, 10);
+const posts = await getPosts();
+const tags = getTags(posts);
 ---
 <Base>
-  <p class="intro">{SITE_DESCRIPTION}</p>
-  <ul class="posts">
-    {posts.map((post) => (
-      <li>
-        <a href={`/posts/${post.id}/`}>
-          <h2>{post.data.title}</h2>
-          <p>{post.data.description}</p>
-          <time class="meta" datetime={post.data.pubDate.toISOString()}>{fmt(post.data.pubDate)}</time>
-        </a>
-      </li>
-    ))}
-  </ul>
+  <section class="hero">
+    <p class="eyebrow">ironhiro.log</p>
+    <h1>소프트웨어와 하드웨어 사이의 기록</h1>
+    <p class="desc">{SITE_DESCRIPTION}</p>
+    <p class="by"><a href={RESUME_URL}>조용현</a> · 키오스크 풀스택 개발자</p>
+  </section>
+
+  {tags.length > 0 && (
+    <ul class="chips tags" aria-label="태그">
+      {tags.map(([t, n]) => <li><a class="chip" href={`/tags/${t}/`}>{t}<span class="n">{n}</span></a></li>)}
+    </ul>
+  )}
+
+  <PostList posts={posts} />
 </Base>
 
 <style>
-  .intro { color: var(--muted); margin: 0 0 40px; }
-  .posts { list-style: none; margin: 0; padding: 0; }
-  .posts li { border-top: 1px solid var(--line); }
-  .posts a { display: block; padding: 24px 0; color: inherit; }
-  .posts a:hover { text-decoration: none; }
-  .posts a:hover h2 { color: var(--accent); }
-  .posts h2 { font-size: 21px; margin: 0 0 4px; letter-spacing: -.01em; }
-  .posts p { margin: 0 0 6px; color: var(--muted); font-size: 15.5px; }
+  .hero { margin-bottom: 40px; }
+  h1 { font-size: clamp(26px, 5vw, 38px); line-height: 1.3; letter-spacing: -.03em; color: var(--strong); margin: 0 0 16px; font-weight: 750; }
+  .desc { max-width: 560px; margin: 0 0 12px; }
+  .by { font-size: 14.5px; color: var(--faint); margin: 0; }
+  .by a { color: var(--strong); border-bottom: 1px solid var(--line); }
+  .by a:hover { color: var(--accent); border-color: var(--accent); }
+  .tags { margin: 0 0 48px; }
+  .n { margin-left: 6px; opacity: .6; font-variant-numeric: tabular-nums; }
 </style>
