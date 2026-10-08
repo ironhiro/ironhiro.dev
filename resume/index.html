@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>조용현 · Yonghyun Cho</title>
+  <meta name="description" content="소프트웨어와 하드웨어를 잇는 개발자, 조용현. C# · .NET · WPF 기반 키오스크 풀스택 개발자." />
+  <meta property="og:title" content="조용현 · Yonghyun Cho" />
+  <meta property="og:description" content="소프트웨어와 하드웨어를 잇는 개발자. 무인 운영 환경의 SW–HW 경계를 다루는 키오스크 풀스택 개발자." />
+  <meta property="og:url" content="https://ironhiro.dev" />
+  <meta property="og:type" content="profile" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23111'/><text x='16' y='22' font-size='16' font-family='sans-serif' font-weight='700' fill='%23fff' text-anchor='middle'>YH</text></svg>" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <style>
+    :root {
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #1c1917;
+      --muted: #57534e;
+      --faint: #a8a29e;
+      --line: #e7e5e4;
+      --accent: #2563eb;
+      --chip: #f5f5f4;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0c0a09;
+        --surface: #1c1917;
+        --text: #f5f5f4;
+        --muted: #a8a29e;
+        --faint: #78716c;
+        --line: #292524;
+        --accent: #60a5fa;
+        --chip: #292524;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Pretendard Variable", Pretendard, -apple-system, "Malgun Gothic", sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      word-break: keep-all;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    strong { font-weight: 650; }
+    code { font-family: ui-monospace, Consolas, monospace; font-size: .88em; background: var(--chip); padding: 1px 5px; border-radius: 4px; }
+
+    .wrap { max-width: 820px; margin: 0 auto; padding: 64px 24px 96px; }
+
+    header.hero { margin-bottom: 48px; }
+    .hero .name { font-size: 15px; color: var(--muted); letter-spacing: .02em; margin: 0 0 12px; }
+    .hero h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.3; margin: 0 0 12px; letter-spacing: -.02em; font-weight: 750; }
+    .hero .tagline { font-size: 18px; color: var(--muted); margin: 0 0 24px; }
+    .links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .links a, .links button {
+      display: inline-flex; align-items: center; gap: 6px;
+      font: inherit; font-size: 14px; color: var(--text);
+      border: 1px solid var(--line); background: var(--surface);
+      padding: 6px 14px; border-radius: 999px; cursor: pointer;
+    }
+    .links a:hover, .links button:hover { border-color: var(--faint); text-decoration: none; }
+
+    section { margin-top: 56px; }
+    h2 {
+      font-size: 13px; text-transform: uppercase; letter-spacing: .12em;
+      color: var(--faint); font-weight: 600; margin: 0 0 20px;
+      padding-bottom: 10px; border-bottom: 1px solid var(--line);
+    }
+    p { margin: 0 0 14px; }
+
+    .skills { display: grid; grid-template-columns: 120px 1fr; gap: 10px 16px; margin: 0; }
+    .skills dt { font-size: 14px; font-weight: 600; color: var(--muted); padding-top: 3px; }
+    .skills dd { margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip { font-size: 13.5px; background: var(--chip); padding: 3px 10px; border-radius: 6px; }
+
+    .job { margin-bottom: 48px; }
+    .job-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 16px; }
+    .job-head h3 { font-size: 21px; margin: 0; letter-spacing: -.01em; }
+    .job-head .role { color: var(--muted); font-size: 15px; font-weight: 400; margin-left: 6px; }
+    .period { color: var(--faint); font-size: 14px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .job-summary { color: var(--muted); margin: 8px 0 20px; }
+
+    .project { margin: 0 0 24px; padding-left: 16px; border-left: 2px solid var(--line); }
+    .project h4 { font-size: 16.5px; margin: 0 0 6px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 12px; }
+    .project h4 .period { font-weight: 400; }
+    .ctx { font-size: 15px; color: var(--muted); margin-bottom: 8px; }
+    ul { margin: 0; padding-left: 20px; }
+    li { margin-bottom: 8px; font-size: 15.5px; }
+    li::marker { color: var(--faint); }
+
+    .portfolio { display: grid; gap: 14px; }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; }
+    .card h3 { font-size: 16.5px; margin: 0 0 2px; }
+    .card .meta { font-size: 13.5px; color: var(--faint); margin-bottom: 8px; }
+    .card p { font-size: 15px; margin: 0; }
+    .card .meta a { margin-left: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 15px; }
+    td { padding: 8px 0; border-bottom: 1px solid var(--line); }
+    td:first-child { color: var(--faint); width: 90px; font-variant-numeric: tabular-nums; }
+    td:last-child { color: var(--muted); text-align: right; }
+
+    footer { margin-top: 72px; font-size: 13px; color: var(--faint); }
+
+    @media (max-width: 600px) {
+      .wrap { padding: 40px 16px 64px; }
+      .skills { grid-template-columns: 1fr; gap: 4px; }
+      .skills dd { margin-bottom: 10px; }
+      td:last-child { display: none; }
+    }
+
+    @media print {
+      :root { --bg: #fff; --surface: #fff; --text: #111; --muted: #444; --faint: #777; --line: #ddd; --chip: #f1f1f1; }
+      body { font-size: 11pt; line-height: 1.55; }
+      .wrap { max-width: none; padding: 0; }
+      .no-print { display: none !important; }
+      section { margin-top: 24px; }
+      .job, .project, .card { break-inside: avoid; }
+      a { color: inherit; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero">
+      <p class="name">조용현 · Yonghyun Cho</p>
+      <h1>소프트웨어와 하드웨어를 잇는 개발자</h1>
+      <p class="tagline">무인 운영 환경의 SW–HW 경계를 5년째 다루는 키오스크 풀스택 개발자</p>
+      <nav class="links">
+        <a href="https://github.com/ironhiro" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="https://blog.ironhiro.dev">Blog ↗</a>
+        <button type="button" class="no-print" onclick="window.print()">PDF로 저장</button>
+      </nav>
+    </header>
+
+    <section id="summary">
+      <h2>Summary</h2>
+      <p>1년차에 <strong>CUDA/C++ 기반 홀로그램 생성 알고리즘</strong> 연구를 시작으로, 4D 영상 솔루션의 Windows 클라이언트를 거쳐 <strong>인생네컷 키오스크 솔루션</strong>의 신규 아키텍처 설계와 결제·하드웨어 통합을 담당해왔습니다. 카메라 입력부터 결과물 합성·인쇄까지의 전 구간을 직접 다뤄온 5년차 개발자입니다.</p>
+      <p>OpenCV·LUT 기반 색 보정에서 시작해 <strong>Canon SDK · FFmpeg · Windows Graphics</strong> 미디어 파이프라인, <strong>RS232 / MDB 하드웨어 제어</strong>, 국내·해외 <strong>7종 결제 디바이스를 단일 인터페이스로 추상화하는 OOP 구조</strong>까지 설계·구현해왔습니다.</p>
+      <p>운영 중인 서비스 위에서 <strong>.NET Framework → .NET Core, WinForms → WPF, MVVM Helper 종속 → DI 기반 구조</strong>로의 마이그레이션을 점진적으로 수행했고, <strong>동작하는 코드보다 다음 작업자가 모듈만 교체하면 되는 구조</strong>를 남기는 데 우선순위를 둡니다. <strong>비전 · 디바이스 제어 · 결제 등 도메인 지식이 깊어질수록 가치가 누적되는 영역</strong>에서 성장하고자 합니다.</p>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+      <dl class="skills">
+        <dt>Core</dt>
+        <dd><span class="chip">C#</span><span class="chip">.NET / .NET Core</span><span class="chip">WPF</span><span class="chip">MVVM</span><span class="chip">DI</span><span class="chip">OOP</span></dd>
+        <dt>UI</dt>
+        <dd><span class="chip">XAML</span><span class="chip">DevExpress</span><span class="chip">WebView2</span></dd>
+        <dt>Vision · Media</dt>
+        <dd><span class="chip">OpenCV</span><span class="chip">Canon SDK (EDSDK)</span><span class="chip">FFmpeg</span><span class="chip">Windows Graphics</span></dd>
+        <dt>Protocol</dt>
+        <dd><span class="chip">RESTful API</span><span class="chip">RS232 / MDB</span><span class="chip">TCP</span><span class="chip">Named Pipe</span></dd>
+        <dt>Server · Infra</dt>
+        <dd><span class="chip">AWS EC2 / S3</span><span class="chip">Docker</span><span class="chip">FastAPI</span><span class="chip">Node.js</span></dd>
+        <dt>DB</dt>
+        <dd><span class="chip">MSSQL</span><span class="chip">MySQL</span></dd>
+        <dt>관심 / 경험</dt>
+        <dd><span class="chip">React</span><span class="chip">TypeScript</span><span class="chip">Next.js</span><span class="chip">Three.js</span></dd>
+      </dl>
+    </section>
+
+    <section id="experience">
+      <h2>Experience</h2>
+
+      <article class="job">
+        <div class="job-head">
+          <h3>엘케이벤쳐스 서울본부<span class="role">개발1팀 · 대리</span></h3>
+          <span class="period">2023.09 – 2026.04 · 2년 8개월</span>
+        </div>
+        <p class="job-summary">인생네컷 키오스크 솔루션 및 전사 결제 인프라 담당. 신규 솔루션("퀀텀") 아키텍처 설계·국내외 결제기 통합·이벤트 모듈화·레거시 유지보수를 동시에 수행.</p>
+
+        <div class="project">
+          <h4>인생네컷 키오스크 솔루션 리뉴얼 및 유지보수 <span class="period">2024 – 2026.04</span></h4>
+          <p class="ctx">6년 이상 운영된 .NET Framework + WinForms 레거시는 이벤트·결제 추가 시 분기 코드가 누적되어 신규 기능마다 사이드이펙트 점검 비용이 커지는 상태. 이를 .NET 6.0 + WPF + MVVM 기반 신규 솔루션으로 전환하면서, 단순 포팅이 아닌 <strong>확장 가능한 구조 설계</strong>를 목표로 잡았습니다.</p>
+          <ul>
+            <li><strong>MVVM Helper 종속 → DI 기반 OOP 아키텍처로 전환.</strong> 결제·카메라·이벤트 로직이 ViewModel에 직접 결합되어 유사 프로그램마다 프로젝트를 새로 만들어야 하던 구조를, <code>Microsoft.Extensions.DependencyInjection</code> 도입으로 서비스 레이어를 분리하고 핵심 도메인을 <strong>인터페이스 단위로 추상화</strong>. 결제기·이벤트 추가 시 기존 코드 수정 없이 <strong>구현체만 DI 컨테이너에 등록</strong>하는 방식으로 정리.</li>
+            <li><strong>공통 모듈을 Git Submodule + 내부 패키지로 분리.</strong> Face Tracking, Background Removal, Canon EDSDK 래퍼, OpenCV/LUT 후처리 등 중복 구현되던 모듈을 분리하고 솔루션 간 동일 인터페이스로 통일.</li>
+            <li><strong>이벤트 플러그인 구조 설계.</strong> 연 10건 이상 단기간에 들어오는 콜라보·시즌 이벤트를 유형(스탬프형 / 필터형 / 릴레이형 / 영상연동형)별 인터페이스와 IoC 등록 규약으로 추상화해, <strong>신규 이벤트는 리소스 + 콘텐츠 로직만 작성하면 등록되는 플러그인 방식</strong>으로 전환. 룰렛 스탬프·히든 메시지·농심 60주년·쿠팡 트래블·절단네컷 등을 동일 구조 위에서 처리.</li>
+            <li><strong>Custom Control 체계.</strong> 외부 UI 프레임워크의 라이선스·런타임 부담 없이 키오스크 전용 인터랙션(터치 응답, 풀스크린 전이, 카메라 라이브뷰 합성, 인쇄 미리보기)에 대응하도록 <strong>ControlTemplate + Attached Behavior</strong> 기반 재사용 컴포넌트 체계 구축.</li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <h4>국내·해외 결제 인프라 통합 <span class="period">2024 – 2025</span></h4>
+          <p class="ctx">30개국 이상의 결제 수단(PAYCO·KakaoPay·MYPG / SwipePay(QRIS)·Global Payments·NZ Payments·Spectra·Nayax·PAX)을 운영하며 통신 프로토콜이 <strong>RESTful API · RS232 · MDB로 상이</strong>. 연 4건 이상의 신규 결제기 연동 요구에 대응 비용이 컸습니다.</p>
+          <ul>
+            <li>결제 모듈을 <code>IPayment</code> <strong>단일 인터페이스로 추상화</strong>하고 프로토콜 어댑터(REST / Serial / MDB)와 결제사 구현체를 <strong>2단계로 분리</strong>. 신규 결제기는 어댑터 재사용 + 구현체 추가만으로 연동.</li>
+            <li>사내망 직접 호출이 불가능한 KakaoPay를 위해 <strong>AWS EC2 + FastAPI + Docker로 Proxy 서버를 설계·배포·운영</strong>. 결제사 IP 화이트리스트와 결합해 운영 안정성 확보.</li>
+            <li><strong>사내 결제 테스트 도구</strong>를 개발해 키오스크 실결제 검증을 데스크톱의 프로토콜별 요청/응답/취소 시뮬레이션으로 대체.</li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <h4>카메라·영상·이미지 처리 파이프라인 <span class="period">2023.09 – 2026.04</span></h4>
+          <p class="ctx">라이브 프리뷰 → 촬영 → 후처리 → 합성 → 인쇄까지의 미디어 파이프라인을 카메라 모델·이벤트 프레임·LUT 색감 변경에 따라 빠르게 교체할 수 있어야 했습니다.</p>
+          <ul>
+            <li><strong>Canon SDK(EDSDK)</strong> 카메라 제어 래퍼 작성. 라이브뷰 스트리밍, AF 락, 셔터 트리거, 비동기 이미지 다운로드를 멀티 카메라 동시 운용 가능한 구조로 추상화.</li>
+            <li><strong>OpenCV 기반 화각 탐색 도구</strong>로 매장 설치 시 카메라 위치를 실시간 프리뷰로 조정. <strong>LUT 색 보정 파이프라인</strong>은 디자인팀이 <code>.cube</code> 파일만 교체하면 즉시 반영되도록 외부화.</li>
+            <li><strong>FFmpeg 기반 영상·타임랩스 생성</strong>과 <strong>Windows Graphics 기반 프레임-사진 합성</strong>을 구현해 영상형 결과물도 동일 파이프라인에서 처리.</li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <h4>하드웨어 연동 (RS232 · MDB · 외부 디바이스)</h4>
+          <ul>
+            <li>스튜디오 조명, 일본향 입수금지 안내 보드 등 주변기기를 <strong>RS232 시리얼</strong>로 연동. 응답 지연이 UI를 블로킹하지 않도록 <strong>비동기 큐 + 타임아웃·재시도 정책</strong>을 가진 공용 시리얼 매니저 설계.</li>
+            <li><strong>시리얼 페이로드 디코딩 단위까지 직접 추적</strong>해 HW 측 이슈로 분류되던 문제를 자체 해결한 사례 다수.</li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <h4>포키2 — WPF + WebView2 하이브리드 앱 <span class="period">2024</span></h4>
+          <ul>
+            <li>레거시 WinForms 솔루션을 <strong>.NET 8.0 + WPF + WebView2 하이브리드</strong>로 전환. 네이티브와 웹 UI 프로세스를 <strong>IPC(Named Pipe)</strong>로 분리하고 메시지 브릿지 인터페이스를 설계해 프론트엔드 팀(React + TypeScript + Zustand)과 <strong>독립 배포 가능한 구조</strong>로 협업. 실 매장 운영 중.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <h3>포디리플레이코리아<span class="role">Product Division · 사원</span></h3>
+          <span class="period">2021.12 – 2023.08 · 1년 9개월</span>
+        </div>
+        <p class="job-summary">4D 리플레이 영상 솔루션의 Windows 클라이언트 및 Daemon 개발. UI 프레임워크로 DevExpress 활용.</p>
+
+        <div class="project">
+          <h4>.NET Migration <span class="period">2023.05</span></h4>
+          <ul><li><strong>.NET Framework 4.8 → .NET 5</strong> 마이그레이션과 <strong>WinForms → WPF</strong> 전환을 동시 수행. GDI+ / Windows Forms 비호환 API를 대체 구현으로 해소.</li></ul>
+        </div>
+        <div class="project">
+          <h4>솔루션 기능 개발 및 운영 <span class="period">2021.12 – 2023.07</span></h4>
+          <ul>
+            <li><strong>TCP Socket 기반 Daemon 통신 프로토콜 설계·구현.</strong> 다중 카메라 제어/녹화/송출 명령을 비동기 큐로 처리해 명령 유실·순서 보장·에러 복구를 동일 패턴으로 추상화.</li>
+            <li><strong>VLC 래퍼 기반 RTSP 라이브 송출 플레이어</strong>로 다중 화면 동시 송출 지원. <strong>OpenCV 색 보정</strong>과 <strong>FFmpeg 녹화 파일 백업·트랜스코딩</strong>을 내장 기능으로 통합.</li>
+          </ul>
+        </div>
+        <div class="project">
+          <h4>4D Golf POC <span class="period">2023.05 – 2023.07</span></h4>
+          <ul><li><strong>.NET 5 + WPF 키오스크 앱</strong>으로 골프 스윙 영상 촬영·클립 자동 제작 PoC 단독 구현. <strong>C++ 영상 처리 모듈과의 P/Invoke 인터페이스</strong> 설계.</li></ul>
+        </div>
+        <div class="project">
+          <h4>Media Management <span class="period">2022.08 – 2022.10</span></h4>
+          <ul><li>다중 카메라 원본·리플레이 영상 백업·관리 도구. <strong>FFmpeg 기반 Merge·트랜스코딩 파이프라인</strong>과 Progress 추적/취소 처리로 장시간 작업의 응답성 확보.</li></ul>
+        </div>
+        <div class="project">
+          <h4>Template Editor <span class="period">2022.02 – 2022.04</span></h4>
+          <ul><li>리플레이 영상 양식 편집 데스크톱 도구. JSON 직렬화 기반 저장/백업, 예상 재생 시간 미리보기 구현.</li></ul>
+        </div>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <h3>구미전자정보기술원<span class="role">실감미디어연구센터 · 위촉연구원</span></h3>
+          <span class="period">2020.08 – 2021.08 · 1년 1개월</span>
+        </div>
+        <ul style="margin-top:12px">
+          <li>홀로그램 콘텐츠 생성 오픈소스 라이브러리 <strong>OpenHolo</strong> 개발 참여. <strong>PAS(Point Source Algorithm) · Angular Spectrum</strong> 알고리즘을 C++로 구현 후 CUDA 커널로 포팅, 메모리 액세스 패턴을 정리해 연산 시간 단축.</li>
+          <li>CPU/GPU 양쪽에서 동작 가능한 라이브러리 인터페이스를 설계해 환경에 맞게 백엔드 선택 가능.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section id="portfolio">
+      <h2>Portfolio</h2>
+      <div class="portfolio">
+        <div class="card">
+          <h3>농심 60주년 이벤트 — QR 기반 다자간 릴레이 촬영</h3>
+          <div class="meta">2025 · 인생네컷 · 키오스크 + 모바일 웹</div>
+          <p>키오스크 ↔ 모바일 웹을 잇는 다자간 릴레이 플로우 설계. 송신자 촬영 → 수신자용 프레임 QR 생성 → 모바일 촬영 → 종합본 QR → 키오스크 인쇄까지 <strong>상태 동기화, 세션 관리, QR 라이프사이클</strong>을 직접 설계.</p>
+        </div>
+        <div class="card">
+          <h3>붕오떡 — Next.js + React Three Fiber 3D 인터랙티브 웹</h3>
+          <div class="meta">2025 · 개인 프로젝트 · <a href="https://ironhiro.github.io/bungodduk" target="_blank" rel="noopener">ironhiro.github.io/bungodduk ↗</a></div>
+          <p>Next.js 14 + Three.js / React Three Fiber + Zustand로 3D 큐브가 벽에 충돌 시 분열하는 시뮬레이션과 실시간 파라미터(분열 깊이·중력·탄성) 조정 UI 구현.</p>
+        </div>
+        <div class="card">
+          <h3>절단네컷 — 영상·BGM 연동 촬영 솔루션</h3>
+          <div class="meta">2024 · 인생네컷</div>
+          <p>이벤트 플러그인 인터페이스 위에 영상연동형 이벤트로 구현. 영상 재생 → 촬영 종료까지 BGM 연속 재생 → 동일 유형 내 프레임 랜덤화로 매 촬영마다 다른 결과물 생성.</p>
+        </div>
+        <div class="card">
+          <h3>쿠팡 트래블 — 지역 연동 영상·프레임 매칭 이벤트</h3>
+          <div class="meta">2024 · 인생네컷</div>
+          <p>여행 지역 영상 랜덤 재생 후 해당 지역에 매핑된 프레임만 노출하는 <strong>지역–영상–프레임 매칭 로직</strong> 설계. 메타데이터 분리로 캠페인 확장 시 데이터 교체만으로 대응.</p>
+        </div>
+        <div class="card">
+          <h3>OpenHolo — CUDA/C++ 홀로그램 생성 라이브러리</h3>
+          <div class="meta">2020 · 구미전자정보기술원 · <a href="https://github.com/ironhiro/Openholo" target="_blank" rel="noopener">github.com/ironhiro/Openholo ↗</a></div>
+          <p>PAS·Angular Spectrum 알고리즘의 C++ 구현 → CUDA 커널 포팅. CPU/GPU 백엔드 선택형 인터페이스 설계.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <h2>Education</h2>
+      <div class="job-head">
+        <h3 style="font-size:18px;margin:0">금오공과대학교<span class="role">컴퓨터소프트웨어공학과</span></h3>
+        <span class="period">2012.03 – 2020.08</span>
+      </div>
+      <ul style="margin-top:12px">
+        <li>졸업 작품: <strong>Whereisit</strong> — 지역별 공중화장실 탐색 Android 앱 (6인 팀)</li>
+        <li>교내 C/C++ 멘토링 활동</li>
+        <li>클라우드 기반 모듈식 BMS 적용 이차전지 배터리팩 개발 (산학 연구과제)</li>
+      </ul>
+    </section>
+
+    <section id="certifications">
+      <h2>Certifications</h2>
+      <table>
+        <tr><td>2025.12</td><td><strong>정보처리기사</strong></td><td>한국산업인력공단</td></tr>
+        <tr><td>2025.01</td><td><strong>JLPT N1</strong></td><td>일본국제교육협회</td></tr>
+        <tr><td>2019.03</td><td>컴퓨터활용능력 1급</td><td>대한상공회의소</td></tr>
+      </table>
+    </section>
+
+    <footer>© 2026 Yonghyun Cho · ironhiro.dev</footer>
+  </main>
+</body>
+</html>
