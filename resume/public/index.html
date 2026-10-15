@@ -11,6 +11,11 @@
   <meta property="og:type" content="profile" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230f172a'/><text x='16' y='22' font-size='16' font-family='sans-serif' font-weight='700' fill='%235eead4' text-anchor='middle'>YH</text></svg>" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <script>
+    // saved theme before first paint; storage can be unavailable (private mode)
+    try { const t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch {}
+    document.documentElement.classList.add('js');
+  </script>
   <style>
     :root {
       --bg: #0f172a;
@@ -26,7 +31,7 @@
       --line: #1e293b;
     }
     @media (prefers-color-scheme: light) {
-      :root {
+      :root:not([data-theme="dark"]) {
         --bg: #f8fafc;
         --text: #475569;
         --strong: #0f172a;
@@ -39,6 +44,19 @@
         --spot: rgba(56, 189, 248, .12);
         --line: #e2e8f0;
       }
+    }
+    :root[data-theme="light"] {
+      --bg: #f8fafc;
+      --text: #475569;
+      --strong: #0f172a;
+      --faint: #94a3b8;
+      --accent: #0f766e;
+      --chip-bg: rgba(13, 148, 136, .1);
+      --chip-fg: #0f766e;
+      --card-hover: rgba(255, 255, 255, .9);
+      --card-edge: rgba(15, 23, 42, .08);
+      --spot: rgba(56, 189, 248, .12);
+      --line: #e2e8f0;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
@@ -155,6 +173,7 @@
     }
     @media (max-width: 639px) {
       .layout { padding: 0 16px; }
+      .theme-toggle { top: 6px; right: 16px; }
       h2 { margin: 0 -16px 20px; padding: 14px 16px; }
       .card { margin: 0; padding: 4px 0; }
       .card .body { display: grid; gap: 8px; }
@@ -166,20 +185,46 @@
       .layout { display: flex; justify-content: space-between; gap: 48px; padding: 0 48px; }
       .side { position: sticky; top: 0; height: 100vh; width: 46%; padding: 96px 0; display: flex; flex-direction: column; justify-content: space-between; }
       .toc { display: block; }
+      .theme-toggle { top: 24px; right: 32px; }
       main { width: 54%; padding: 96px 0; }
-      h2 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); margin: 0; padding: 0; }
+      h2 { position: static; margin: 0 0 32px; padding: 0; background: none; backdrop-filter: none; }
       section { scroll-margin-top: 96px; }
       .cards:hover .card:not(:hover) { opacity: .5; }
       .card:hover { background: var(--card-hover); box-shadow: inset 0 1px 0 0 var(--card-edge); }
     }
+    /* section label: name, then a hairline to the edge */
+    h2 { display: flex; align-items: center; gap: 16px; }
+    h2::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+    /* theme toggle */
+    .theme-toggle { position: fixed; top: 8px; right: 24px; z-index: 10; display: inline-flex; align-items: center; justify-content: center; flex: none; width: 36px; height: 36px; border-radius: 999px; border: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(8px); color: var(--faint); cursor: pointer; transition: color .15s, border-color .15s; }
+    .theme-toggle:hover { color: var(--strong); border-color: var(--faint); }
+    .theme-toggle svg { width: 18px; height: 18px; }
+    .theme-toggle .sun { display: none; }
+    :root[data-theme="light"] .theme-toggle .sun { display: block; }
+    :root[data-theme="light"] .theme-toggle .moon { display: none; }
+    @media (prefers-color-scheme: light) {
+      :root:not([data-theme="dark"]) .theme-toggle .sun { display: block; }
+      :root:not([data-theme="dark"]) .theme-toggle .moon { display: none; }
+    }
+    /* scroll reveal (only when JS runs) */
+    .js .reveal { opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s ease, background .2s, box-shadow .2s; }
+    .js .reveal.in { opacity: 1; transform: none; }
+    @media (min-width: 1024px) {
+      .js .cards:hover .card.reveal.in:not(:hover) { opacity: .5; }
+    }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       * { transition: none !important; }
+      .js .reveal { opacity: 1; transform: none; }
     }
   </style>
 </head>
 <body>
   <div class="spotlight" aria-hidden="true"></div>
+  <button type="button" class="theme-toggle" aria-label="밝은/어두운 테마 전환" title="테마 전환">
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+  </button>
   <div class="layout">
     <header class="side">
       <div>
@@ -203,6 +248,9 @@
         <li><a href="https://blog.ironhiro.dev" aria-label="Blog">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/></svg>
           <span>Blog</span></a></li>
+        <li><a id="mail-link" href="#" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          <span>Email</span></a></li>
       </ul>
     </header>
 
@@ -234,7 +282,7 @@
       <section id="experience">
         <h2>Experience</h2>
         <ol class="cards">
-          <li class="card">
+          <li class="card reveal">
             <div class="date">2023.09 — 2026.04</div>
             <div class="body">
               <h3>엘케이벤쳐스 · 대리<span class="sub">서울본부 개발1팀 · 2년 8개월</span></h3>
@@ -289,7 +337,7 @@
             </div>
           </li>
 
-          <li class="card">
+          <li class="card reveal">
             <div class="date">2021.12 — 2023.08</div>
             <div class="body">
               <h3>포디리플레이코리아 · 사원<span class="sub">Product Division · 1년 9개월</span></h3>
@@ -322,7 +370,7 @@
             </div>
           </li>
 
-          <li class="card">
+          <li class="card reveal">
             <div class="date">2020.08 — 2021.08</div>
             <div class="body">
               <h3>구미전자정보기술원 · 위촉연구원<span class="sub">실감미디어연구센터 · 1년 1개월</span></h3>
@@ -336,7 +384,7 @@
       <section id="projects">
         <h2>Projects</h2>
         <ul class="cards">
-          <li class="card">
+          <li class="card reveal">
             <div class="date">2026 · 개인</div>
             <div class="body">
               <h3><a href="https://multiview.ironhiro.dev" target="_blank" rel="noopener">태고 멀티뷰<span class="arrow">↗</span></a></h3>
@@ -345,7 +393,7 @@
               <ul class="chips"><li class="chip">ASP.NET Core (.NET 10)</li><li class="chip">React</li><li class="chip">TypeScript</li><li class="chip">Vite</li><li class="chip">YouTube Data API</li><li class="chip">Docker</li><li class="chip">Azure Container Apps</li><li class="chip">GitHub Actions</li></ul>
             </div>
           </li>
-          <li class="card">
+          <li class="card reveal">
             <div class="date">2025 · 인생네컷</div>
             <div class="body">
               <h3>농심 60주년 이벤트<span class="sub">QR 기반 다자간 릴레이 촬영</span></h3>
@@ -353,7 +401,7 @@
               <ul class="chips"><li class="chip">C#</li><li class="chip">.NET</li><li class="chip">WPF</li><li class="chip">MVVM</li><li class="chip">QR</li><li class="chip">Mobile Web</li></ul>
             </div>
           </li>
-          <li class="card">
+          <li class="card reveal">
             <div class="date">2025 · 개인</div>
             <div class="body">
               <h3><a href="https://ironhiro.github.io/bungodduk" target="_blank" rel="noopener">붕오떡<span class="arrow">↗</span></a><span class="sub">3D 인터랙티브 웹</span></h3>
@@ -361,7 +409,7 @@
               <ul class="chips"><li class="chip">Next.js 14</li><li class="chip">React</li><li class="chip">TypeScript</li><li class="chip">Three.js</li><li class="chip">React Three Fiber</li><li class="chip">Zustand</li><li class="chip">GitHub Pages</li></ul>
             </div>
           </li>
-          <li class="card">
+          <li class="card reveal">
             <div class="date">2024 · 인생네컷</div>
             <div class="body">
               <h3>절단네컷<span class="sub">영상·BGM 연동 촬영 솔루션</span></h3>
@@ -369,7 +417,7 @@
               <ul class="chips"><li class="chip">C#</li><li class="chip">.NET</li><li class="chip">WPF</li><li class="chip">MVVM</li><li class="chip">DI</li></ul>
             </div>
           </li>
-          <li class="card">
+          <li class="card reveal">
             <div class="date">2024 · 인생네컷</div>
             <div class="body">
               <h3>쿠팡 트래블<span class="sub">지역 연동 영상·프레임 매칭 이벤트</span></h3>
@@ -377,7 +425,7 @@
               <ul class="chips"><li class="chip">C#</li><li class="chip">.NET</li><li class="chip">WPF</li><li class="chip">MVVM</li><li class="chip">DI</li></ul>
             </div>
           </li>
-          <li class="card">
+          <li class="card reveal">
             <div class="date">2020 · 연구</div>
             <div class="body">
               <h3><a href="https://github.com/ironhiro/Openholo" target="_blank" rel="noopener">OpenHolo<span class="arrow">↗</span></a><span class="sub">CUDA/C++ 홀로그램 생성 라이브러리</span></h3>
@@ -412,6 +460,29 @@
   </div>
 
   <script>
+    // email is assembled here so the address is not sitting in the HTML for scrapers
+    document.getElementById('mail-link').href = 'mailto:' + ['iuncehiro', 'gmail.com'].join('@');
+
+    // theme toggle: flips whatever is showing now and remembers it
+    document.querySelector('.theme-toggle').addEventListener('click', () => {
+      const root = document.documentElement;
+      const current = root.dataset.theme || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      const next = current === 'light' ? 'dark' : 'light';
+      root.dataset.theme = next;
+      try { localStorage.setItem('theme', next); } catch {}
+    });
+
+    // fade cards in as they scroll into view
+    const revealed = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      }), { rootMargin: '0px 0px -8% 0px' });
+      revealed.forEach((el) => io.observe(el));
+    } else {
+      revealed.forEach((el) => el.classList.add('in'));
+    }
+
     // cursor spotlight (mouse only)
     if (matchMedia('(pointer: fine)').matches) {
       const root = document.documentElement;
