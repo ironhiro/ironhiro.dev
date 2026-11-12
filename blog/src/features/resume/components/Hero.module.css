@@ -1,0 +1,8 @@
+.hero { padding: 88px 0 72px; }
+.name { margin: 0; font-size: clamp(40px, 8vw, 64px); line-height: 1.1; letter-spacing: -.04em; font-weight: 750; color: var(--strong); }
+.en { margin: 10px 0 0; font-family: var(--mono); font-size: 14px; color: var(--faint); }
+.role { margin: 28px 0 0; font-size: clamp(20px, 3vw, 24px); font-weight: 600; letter-spacing: -.02em; color: var(--strong); }
+.lead { max-width: 560px; margin: 10px 0 0; font-size: 17px; }
+@media (max-width: 639px) {
+  .hero { padding: 56px 0; }
+}

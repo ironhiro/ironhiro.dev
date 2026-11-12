@@ -1,0 +1,5 @@
+.kicker { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 16px; font-family: var(--mono); font-size: 13px; color: var(--mint); }
+.kicker::before { content: ""; width: 24px; height: 1px; margin-right: 2px; background: var(--mint); }
+.kicker a { color: var(--faint); }
+.kicker a:hover { color: var(--mint); }
+.sep { color: var(--faint); }

@@ -1,0 +1,12 @@
+---
+import Base from '../../layouts/Base.astro';
+import { PageHeading } from '../../../features/blog/components/PageHeading';
+import { TagGrid } from '../../../features/blog/components/TagGrid';
+import { getPosts, getTags } from '../../lib/posts';
+
+const tags = getTags(await getPosts());
+---
+<Base title="태그">
+  <PageHeading crumbs={[{ label: 'tags' }]} title="태그" />
+  <TagGrid tags={tags} />
+</Base>

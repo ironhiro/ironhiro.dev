@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import { HomeHero } from '../../features/blog/components/HomeHero';
+import { TagChips } from '../../features/blog/components/TagChips';
+import { PostList } from '../../features/blog/components/PostList';
+import { getPosts, getTags, toSummary } from '../lib/posts';
+
+const posts = await getPosts();
+const tags = getTags(posts);
+---
+<Base>
+  <HomeHero />
+  <div class="tags">
+    <TagChips tags={tags} label="태그" />
+  </div>
+  <PostList posts={posts.map(toSummary)} />
+</Base>
+
+<style>
+  .tags { margin: 0 0 56px; }
+  .tags:empty { display: none; }
+</style>

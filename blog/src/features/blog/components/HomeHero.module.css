@@ -1,0 +1,6 @@
+.hero { margin-bottom: 40px; }
+.title { margin: 0 0 18px; font-size: clamp(30px, 6vw, 46px); line-height: 1.2; letter-spacing: -.04em; font-weight: 750; color: var(--strong); }
+.desc { max-width: 560px; margin: 0 0 14px; font-size: 16.5px; }
+.by { margin: 0; font-family: var(--mono); font-size: 13px; color: var(--faint); }
+.by a { color: var(--strong); border-bottom: 1px solid var(--line); }
+.by a:hover { color: var(--mint); border-color: var(--mint-line); }

@@ -1,0 +1,7 @@
+.list { display: flex; flex-wrap: wrap; gap: 8px; margin: 32px 0 0; padding: 0; list-style: none; }
+.link {
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--surface); font-size: 14px; color: var(--strong); transition: border-color .15s, color .15s;
+}
+.link:hover { border-color: var(--mint-line); color: var(--mint); }
+.icon { width: 16px; height: 16px; }

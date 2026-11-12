@@ -1,15 +1,32 @@
 {
-  "name": "ironhiro-blog",
+  "name": "ironhiro-site",
   "type": "module",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "astro dev",
+    "dev:resume": "astro dev --config astro.resume.config.mjs --port 4322",
     "build": "astro build",
-    "preview": "astro preview"
+    "build:resume": "astro build --config astro.resume.config.mjs",
+    "build:all": "npm run build && npm run build:resume",
+    "preview": "astro preview",
+    "preview:resume": "astro preview --config astro.resume.config.mjs --port 4322",
+    "test": "vitest",
+    "typecheck": "astro sync && tsc --noEmit"
   },
   "dependencies": {
+    "@astrojs/react": "^4.4.2",
     "@astrojs/rss": "^4.0.12",
-    "astro": "5.18.2"
+    "astro": "5.18.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "jsdom": "^26.1.0",
+    "vitest": "^3.2.7"
   }
 }
