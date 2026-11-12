@@ -5,7 +5,7 @@
 | 사이트 | 도메인 | Astro 설정 | Wrangler 설정 | 빌드 결과 |
 |---|---|---|---|---|
 | 블로그 | blog.ironhiro.dev | `astro.config.mjs` | `wrangler.jsonc` | `dist/blog` |
-| 이력서 | ironhiro.dev | `astro.resume.config.mjs` | `wrangler.resume.jsonc` | `dist/resume` |
+| 이력서 | ironhiro.dev | `astro.resume.config.mjs` | `deploy/resume/wrangler.jsonc` | `dist/resume` |
 
 ## 구조 (`blog/src/`)
 
@@ -41,11 +41,15 @@ Workers & Pages → Create → Import a repository → `ironhiro/ironhiro.dev`
 | 항목 | resume | blog |
 |---|---|---|
 | Project name | `ironhiro-resume` | `ironhiro-blog` |
-| Path (root directory) | `blog` | `blog` |
-| Build command | `npm run build:resume` | `npm run build` |
-| Deploy command | `npx wrangler deploy --config wrangler.resume.jsonc` | `npx wrangler deploy` |
+| Path (root directory) | `blog/deploy/resume` | `blog` |
+| Build command | `cd ../.. && npm ci && npm run build:resume` | `npm run build` |
+| Deploy command | `npx wrangler deploy` | `npx wrangler deploy` |
+| Non-production deploy command | 기본값 (`npx wrangler preview`) | 기본값 |
+| Production branch | `main` | `main` |
 
 커스텀 도메인은 각 wrangler 설정의 `routes`로 배포 시 자동 연결됩니다.
+
+이력서 Worker는 Root directory를 `blog/deploy/resume`로 따로 둡니다. 두 프로젝트가 같은 Root를 쓰면 Cloudflare가 Root의 `wrangler.jsonc`(블로그용) 이름과 프로젝트 이름을 비교해 오류를 내고, 블로그 설정의 `name`을 바꾸라는 자동 PR을 만들 수 있습니다. 그런 PR은 머지하지 마세요.
 
 ## 블로그 글쓰기
 

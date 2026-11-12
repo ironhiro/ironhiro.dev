@@ -27,7 +27,7 @@ There is no linter or formatter yet.
 | Path (in `blog/`) | What lives there |
 |---|---|
 | `astro.config.mjs` / `wrangler.jsonc` | Blog build and deploy (srcDir `src/blog`, publicDir `public/blog`) |
-| `astro.resume.config.mjs` / `wrangler.resume.jsonc` | Resume build and deploy (srcDir `src/resume`, publicDir `public/resume`) |
+| `astro.resume.config.mjs` / `deploy/resume/wrangler.jsonc` | Resume build and deploy (srcDir `src/resume`, publicDir `public/resume`) |
 | `src/components/` | UI shared by both sites: TopBar, ThemeToggle, Chips, Kicker, SiteFooter, Icons |
 | `src/features/blog/` | Blog-only components and `consts.ts` |
 | `src/features/resume/` | Resume-only components and `data.tsx` (all resume content) |
@@ -109,9 +109,11 @@ export function Chips({ items, label }: ChipsProps) { ... }
 | Worker | Root | Build | Deploy |
 |---|---|---|---|
 | `ironhiro-blog` | `blog` | `npm run build` | `npx wrangler deploy` |
-| `ironhiro-resume` | `blog` | `npm run build:resume` | `npx wrangler deploy --config wrangler.resume.jsonc` |
+| `ironhiro-resume` | `blog/deploy/resume` | `cd ../.. && npm ci && npm run build:resume` | `npx wrangler deploy` |
 
-Custom domains come from `routes` in each wrangler config.
+Custom domains come from `routes` in each wrangler config. Both production branches are `main`; non-production deploy commands stay at the default `npx wrangler preview`.
+
+The resume's wrangler config lives in its own folder on purpose: Cloudflare compares the project name with the `wrangler.jsonc` in the root directory, so the two Workers must not share a root. Never rename the blog's `wrangler.jsonc` to `ironhiro-resume`, even if Cloudflare opens a PR suggesting it.
 
 ## Git
 
