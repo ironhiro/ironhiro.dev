@@ -3,5 +3,6 @@
   "name": "ironhiro-resume",
   "compatibility_date": "2026-09-01",
   "assets": { "directory": "./dist/resume" },
+  "previews": {},
   "routes": [{ "pattern": "ironhiro.dev", "custom_domain": true }]
 }

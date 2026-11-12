@@ -3,5 +3,6 @@
   "name": "ironhiro-blog",
   "compatibility_date": "2026-09-01",
   "assets": { "directory": "./dist/blog", "not_found_handling": "404-page" },
+  "previews": {},
   "routes": [{ "pattern": "blog.ironhiro.dev", "custom_domain": true }]
 }
