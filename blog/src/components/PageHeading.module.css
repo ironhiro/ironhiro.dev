@@ -1,0 +1,4 @@
+.head { margin-bottom: 40px; }
+.title { margin: 0; font-size: clamp(28px, 5vw, 36px); line-height: 1.25; letter-spacing: -.03em; font-weight: 750; color: var(--strong); }
+.prefix { margin-right: 4px; font-family: var(--mono); font-weight: 500; color: var(--mint); }
+.count { margin-left: 12px; font-family: var(--mono); font-size: 15px; font-weight: 400; letter-spacing: 0; color: var(--faint); }

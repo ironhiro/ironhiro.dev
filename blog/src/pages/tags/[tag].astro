@@ -1,24 +1,19 @@
 ---
 import Base from '../../layouts/Base.astro';
-import PostList from '../../components/PostList.astro';
-import { getPosts, getTags } from '../../lib/posts';
+import { PageHeading } from '../../components/PageHeading';
+import { PostList } from '../../components/PostList';
+import { getPosts, getTags, toSummary } from '../../lib/posts';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
-  return getTags(posts).map(([tag]) => ({
-    params: { tag },
-    props: { tag, posts: posts.filter((p) => p.data.tags.includes(tag)) },
+  return getTags(posts).map(({ name }) => ({
+    params: { tag: name },
+    props: { tag: name, posts: posts.filter((p) => p.data.tags.includes(name)).map(toSummary) },
   }));
 }
 const { tag, posts } = Astro.props;
 ---
 <Base title={`#${tag}`} description={`'${tag}' 태그가 붙은 글 ${posts.length}개`}>
-  <p class="kicker"><a href="/tags/">tags</a> / {tag}</p>
-  <h1 class="page-title"><span class="hash">#</span>{tag}<span class="n">{posts.length}</span></h1>
+  <PageHeading crumbs={[{ label: 'tags', href: '/tags/' }, { label: tag }]} prefix="#" title={tag} count={posts.length} />
   <PostList posts={posts} />
 </Base>
-
-<style>
-  .hash { color: var(--mint); font-family: var(--mono); font-weight: 500; margin-right: 4px; }
-  .n { margin-left: 12px; font-family: var(--mono); font-size: 15px; font-weight: 400; color: var(--faint); }
-</style>

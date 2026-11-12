@@ -1,0 +1,10 @@
+.toc { display: none; }
+@media (min-width: 1120px) {
+  .toc { display: block; position: sticky; top: 100px; align-self: start; max-height: calc(100vh - 132px); overflow-y: auto; font-size: 13.5px; }
+}
+.heading { margin: 0 0 12px; font-family: var(--mono); font-size: 12px; color: var(--mint); }
+.list { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line); }
+.list a { display: block; padding: 5px 0 5px 14px; margin-left: -1px; border-left: 2px solid transparent; color: var(--faint); line-height: 1.5; transition: color .15s, border-color .15s; }
+.sub a { padding-left: 26px; font-size: 13px; }
+.list a:hover { color: var(--strong); }
+.list a.active { color: var(--mint); border-left-color: var(--mint); }

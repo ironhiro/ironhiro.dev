@@ -1,4 +1,5 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
+import type { PostLink, PostSummary, TagCount } from '../types/post';
 
 export type Post = CollectionEntry<'blog'>;
 
@@ -7,10 +8,12 @@ export async function getPosts(): Promise<Post[]> {
   return posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 }
 
-export function getTags(posts: Post[]): [string, number][] {
+export function getTags(posts: Post[]): TagCount[] {
   const counts = new Map<string, number>();
   for (const p of posts) for (const t of p.data.tags) counts.set(t, (counts.get(t) ?? 0) + 1);
-  return [...counts].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  return [...counts]
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
 }
 
 // Korean prose reads at roughly 500 characters a minute; code blocks count less.
@@ -19,7 +22,19 @@ export function readingMinutes(body = ''): number {
   return Math.max(1, Math.round(text.length / 500));
 }
 
-export const fmtDate = (d: Date) =>
-  `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
-export const fmtMonthDay = (d: Date) =>
-  `${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+export function toSummary(post: Post): PostSummary {
+  const { title, description, pubDate, updatedDate, tags, draft } = post.data;
+  return {
+    id: post.id,
+    title,
+    description,
+    pubDate: pubDate.toISOString(),
+    updatedDate: updatedDate?.toISOString(),
+    tags,
+    draft,
+    minutes: readingMinutes(post.body),
+  };
+}
+
+export const toLink = (post: Post | undefined): PostLink | undefined =>
+  post && { id: post.id, title: post.data.title };

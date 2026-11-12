@@ -1,0 +1,14 @@
+.toggle {
+  display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; margin-left: 6px;
+  border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--faint); cursor: pointer;
+  transition: color .15s, border-color .15s;
+}
+.toggle:hover { color: var(--mint); border-color: var(--mint-line); }
+.moon, .sun { width: 17px; height: 17px; }
+.sun { display: none; }
+:global(:root[data-theme="light"]) .sun { display: block; }
+:global(:root[data-theme="light"]) .moon { display: none; }
+@media (prefers-color-scheme: light) {
+  :global(:root:not([data-theme="dark"])) .sun { display: block; }
+  :global(:root:not([data-theme="dark"])) .moon { display: none; }
+}
