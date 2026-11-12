@@ -13,14 +13,12 @@ export async function getStaticPaths() {
 const { tag, posts } = Astro.props;
 ---
 <Base title={`#${tag}`} description={`'${tag}' 태그가 붙은 글 ${posts.length}개`}>
-  <p class="eyebrow"><a href="/tags/">Tags</a> / {tag}</p>
-  <h1>#{tag}<span class="n">{posts.length}</span></h1>
+  <p class="kicker"><a href="/tags/">tags</a> / {tag}</p>
+  <h1 class="page-title"><span class="hash">#</span>{tag}<span class="n">{posts.length}</span></h1>
   <PostList posts={posts} />
 </Base>
 
 <style>
-  .eyebrow a { color: var(--faint); }
-  .eyebrow a:hover { color: var(--strong); }
-  h1 { font-size: 32px; color: var(--strong); margin: 0 0 40px; letter-spacing: -.02em; }
-  .n { font-size: 16px; color: var(--faint); font-weight: 500; margin-left: 10px; }
+  .hash { color: var(--mint); font-family: var(--mono); font-weight: 500; margin-right: 4px; }
+  .n { margin-left: 12px; font-family: var(--mono); font-size: 15px; font-weight: 400; color: var(--faint); }
 </style>
