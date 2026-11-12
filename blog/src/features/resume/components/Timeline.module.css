@@ -1,0 +1,48 @@
+.timeline { list-style: none; margin: 0; padding: 0; }
+.job { position: relative; display: grid; gap: 10px; padding: 0 0 48px 28px; }
+.job:last-child { padding-bottom: 0; }
+.job::before { content: ""; position: absolute; left: 4px; top: 12px; bottom: -12px; width: 1px; background: var(--line); }
+.job:last-child::before { display: none; }
+.job::after {
+  content: ""; position: absolute; left: 0; top: 7px; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--bg); border: 2px solid var(--mint); box-sizing: border-box;
+}
+.job:first-child::after { background: var(--mint); box-shadow: 0 0 0 4px var(--mint-soft); }
+
+.when { font-family: var(--mono); font-size: 12.5px; color: var(--faint); font-variant-numeric: tabular-nums; }
+.title { margin: 0; font-size: 19px; font-weight: 650; letter-spacing: -.015em; line-height: 1.4; color: var(--strong); }
+.sub { display: block; margin-top: 2px; font-size: 14px; font-weight: 400; letter-spacing: 0; color: var(--faint); }
+.summary { margin: 0; font-size: 15.5px; }
+.points { margin: 2px 0 0; padding: 0; list-style: none; font-size: 15px; }
+.points li { position: relative; padding-left: 18px; margin-bottom: 6px; }
+.points li::before { content: ""; position: absolute; left: 2px; top: .72em; width: 6px; height: 1px; background: var(--mint); }
+.job code, .detailBody code { font-family: var(--mono); font-size: .86em; color: var(--mint); }
+
+.details { margin-top: 6px; }
+.details summary {
+  display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 8px;
+  font-family: var(--mono); font-size: 12.5px; color: var(--strong); cursor: pointer; list-style: none; transition: border-color .15s, color .15s;
+}
+.details summary:hover { border-color: var(--mint-line); color: var(--mint); }
+.details summary::-webkit-details-marker { display: none; }
+.details summary::before { content: "+"; color: var(--mint); font-weight: 600; }
+.details[open] summary::before { content: "−"; }
+.details[open] .openLabel { display: none; }
+.details:not([open]) .closeLabel { display: none; }
+.detailBody { margin-top: 16px; padding: 4px 20px 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.detailBody h4 { margin: 24px 0 8px; font-size: 15.5px; font-weight: 650; color: var(--strong); }
+.period { margin-left: 8px; font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--faint); }
+.ctx { margin: 0 0 8px; font-size: 14.5px; }
+.detailBody ul { margin: 0; padding-left: 18px; font-size: 14.5px; }
+.detailBody li { margin-bottom: 6px; }
+.detailBody li::marker { color: var(--faint); }
+
+@media (min-width: 720px) {
+  .job { padding-left: 182px; }
+  .when { position: absolute; left: 0; top: 3px; }
+  .job::before { left: 154px; }
+  .job::after { left: 150px; }
+}
+@media (max-width: 639px) {
+  .detailBody { padding: 4px 16px 16px; }
+}

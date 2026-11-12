@@ -1,0 +1,67 @@
+---
+import '../../styles/base.css';
+import { ResumeHeader } from '../../features/resume/components/ResumeHeader';
+import { Hero } from '../../features/resume/components/Hero';
+import { SocialLinks } from '../../features/resume/components/SocialLinks';
+import { ResumeSection } from '../../features/resume/components/ResumeSection';
+import { About } from '../../features/resume/components/About';
+import { Timeline } from '../../features/resume/components/Timeline';
+import { ProjectGrid } from '../../features/resume/components/ProjectGrid';
+import { EducationList } from '../../features/resume/components/EducationList';
+import { RevealOnScroll } from '../../features/resume/components/RevealOnScroll';
+import { SiteFooter } from '../../components/SiteFooter';
+import {
+  about, BLOG_URL, education, email, GITHUB_URL, jobs, meta, profile, projects, sections, skills, socials, spec,
+} from '../../features/resume/data';
+
+const footerLinks = [
+  { label: 'blog', href: BLOG_URL },
+  { label: 'github', href: GITHUB_URL, external: true },
+];
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{meta.title}</title>
+    <meta name="description" content={meta.description} />
+    <meta name="theme-color" content="#0a0c0d" />
+    <link rel="canonical" href={Astro.site} />
+    <meta property="og:title" content={meta.title} />
+    <meta property="og:description" content={meta.ogDescription} />
+    <meta property="og:url" content={Astro.site} />
+    <meta property="og:type" content="profile" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+    <script is:inline>
+      // saved theme before first paint; storage can be unavailable (private mode)
+      try { const t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch {}
+    </script>
+  </head>
+  <body>
+    <ResumeHeader client:load sections={sections} />
+    <div class="board" aria-hidden="true"></div>
+    <main>
+      <div class="wrap mid">
+        <Hero profile={profile} spec={spec}>
+          <SocialLinks client:load links={socials} email={email} />
+        </Hero>
+      </div>
+      <ResumeSection id="about" index="01" title="About">
+        <About paragraphs={about} skills={skills} />
+      </ResumeSection>
+      <ResumeSection id="experience" index="02" title="Experience">
+        <Timeline jobs={jobs} />
+      </ResumeSection>
+      <ResumeSection id="projects" index="03" title="Projects">
+        <ProjectGrid projects={projects} />
+      </ResumeSection>
+      <ResumeSection id="education" index="04" title="Education">
+        <EducationList items={education} />
+      </ResumeSection>
+    </main>
+    <SiteFooter links={footerLinks} width="mid" />
+    <RevealOnScroll client:idle />
+  </body>
+</html>

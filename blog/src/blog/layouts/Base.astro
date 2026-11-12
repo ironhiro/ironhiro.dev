@@ -1,0 +1,55 @@
+---
+import '../../styles/base.css';
+import '../../styles/prose.css';
+import { SITE_TITLE, SITE_DESCRIPTION, RESUME_URL, GITHUB_URL } from '../../features/blog/consts';
+import { BlogHeader, type NavSection } from '../../features/blog/components/BlogHeader';
+import { SiteFooter } from '../../components/SiteFooter';
+import type { WrapWidth } from '../../utils/wrap';
+
+interface Props {
+  title?: string;
+  description?: string;
+  wide?: boolean;
+}
+const { title, description = SITE_DESCRIPTION, wide = false } = Astro.props;
+const width: WrapWidth = wide ? 'wide' : 'default';
+const fullTitle = title ? `${title} · ${SITE_TITLE}` : SITE_TITLE;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const path = Astro.url.pathname;
+const current: NavSection = path === '/' || path.startsWith('/posts') ? 'posts' : path.startsWith('/tags') ? 'tags' : null;
+const footerLinks = [
+  { label: 'ironhiro.dev', href: RESUME_URL },
+  { label: 'github', href: GITHUB_URL, external: true },
+  { label: 'rss', href: '/rss.xml' },
+];
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0a0c0d" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content={path.startsWith('/posts/') ? 'article' : 'website'} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href="/rss.xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+    <script is:inline>
+      // saved theme before first paint; storage can be unavailable (private mode)
+      try { const t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch {}
+    </script>
+  </head>
+  <body>
+    <BlogHeader client:load current={current} width={width} />
+    <div class="board" aria-hidden="true"></div>
+    <main class:list={['wrap', 'site-main', { wide }]}>
+      <slot />
+    </main>
+    <SiteFooter links={footerLinks} width={width} />
+  </body>
+</html>

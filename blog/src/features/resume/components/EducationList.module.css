@@ -1,0 +1,10 @@
+.rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.row { display: grid; grid-template-columns: 140px 1fr; gap: 4px 16px; padding: 16px 0; border-bottom: 1px solid var(--line); font-size: 15.5px; }
+.when { padding-top: 3px; font-family: var(--mono); font-size: 12.5px; color: var(--faint); font-variant-numeric: tabular-nums; }
+.issuer { margin-left: 8px; font-size: 14px; color: var(--faint); }
+.notes { margin: 8px 0 0; padding-left: 18px; font-size: 14.5px; line-height: 1.65; }
+.notes li { margin: 2px 0; }
+.notes li::marker { color: var(--faint); }
+@media (max-width: 639px) {
+  .row { grid-template-columns: 1fr; gap: 6px; }
+}

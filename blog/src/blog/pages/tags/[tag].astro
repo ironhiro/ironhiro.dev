@@ -1,0 +1,19 @@
+---
+import Base from '../../layouts/Base.astro';
+import { PageHeading } from '../../../features/blog/components/PageHeading';
+import { PostList } from '../../../features/blog/components/PostList';
+import { getPosts, getTags, toSummary } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return getTags(posts).map(({ name }) => ({
+    params: { tag: name },
+    props: { tag: name, posts: posts.filter((p) => p.data.tags.includes(name)).map(toSummary) },
+  }));
+}
+const { tag, posts } = Astro.props;
+---
+<Base title={`#${tag}`} description={`'${tag}' 태그가 붙은 글 ${posts.length}개`}>
+  <PageHeading crumbs={[{ label: 'tags', href: '/tags/' }, { label: tag }]} prefix="#" title={tag} count={posts.length} />
+  <PostList posts={posts} />
+</Base>
