@@ -30,7 +30,6 @@ export const GITHUB_URL = 'https://github.com/ironhiro';
 
 export const socials: SocialLink[] = [
   { label: 'GitHub', icon: 'github', href: GITHUB_URL, external: true },
-  { label: 'Blog', icon: 'blog', href: BLOG_URL },
 ];
 
 export const email: EmailParts = { user: 'iuncehiro', domain: 'gmail.com' };
@@ -51,7 +50,7 @@ export const sections: SectionLink[] = [
 
 export const about = [
   <>CUDA/C++ 홀로그램 생성 알고리즘 연구로 시작해, 4D 영상 솔루션의 Windows 클라이언트를 거쳐 <strong>인생네컷 키오스크 솔루션</strong>의 신규 아키텍처 설계와 결제·하드웨어 통합을 맡았습니다. 카메라 입력부터 합성, 인쇄까지 전 구간을 직접 다뤘습니다.</>,
-  <>미디어 쪽에서는 OpenCV·LUT 색 보정과 Canon SDK · FFmpeg · Windows Graphics 파이프라인을, 장비 쪽에서는 RS232 / MDB 제어와 국내외 <strong>결제 디바이스 7종을 하나의 인터페이스로 묶는 구조</strong>를 설계하고 구현했습니다.</>,
+  <>미디어 쪽에서는 OpenCV·LUT 색 보정과 Canon SDK · FFmpeg · Windows Graphics 파이프라인을, 장비 쪽에서는 RS232 / MDB 제어와, 국내 VAN·간편결제·해외 결제·현금까지 <strong>구현체 32개 규모의 결제 모듈을 하나의 인터페이스로 묶는 구조</strong>를 설계하고 구현했습니다.</>,
   <>운영 중인 서비스를 멈추지 않고 .NET Framework → .NET Core, WinForms → WPF, MVVM Helper 종속 → DI 기반 구조로 단계적으로 옮겼습니다. 동작하는 코드보다 <strong>다음 작업자가 모듈만 교체하면 되는 구조</strong>를 남기는 데 우선순위를 둡니다. 비전, 디바이스 제어, 결제처럼 도메인 지식이 쌓일수록 더 잘할 수 있는 분야에서 계속 일하고 싶습니다.</>,
 ];
 
@@ -60,9 +59,9 @@ export const skills: SkillGroup[] = [
   { label: 'UI', items: ['XAML', 'DevExpress', 'WebView2'] },
   { label: 'Vision · Media', items: ['OpenCV', 'Canon SDK (EDSDK)', 'FFmpeg', 'Windows Graphics'] },
   { label: 'Protocol', items: ['RESTful API', 'RS232 / MDB', 'TCP', 'Named Pipe'] },
-  { label: 'Server · Infra', items: ['AWS EC2 / S3', 'Docker', 'FastAPI', 'Node.js'] },
-  { label: 'DB', items: ['MSSQL', 'MySQL'] },
-  { label: '관심 / 경험', items: ['React', 'TypeScript', 'Next.js', 'Three.js'] },
+  { label: 'Server · Infra', items: ['ASP.NET Core', 'FastAPI', 'Docker', 'AWS EC2 / S3', 'Azure Container Apps', 'GitHub Actions'] },
+  { label: 'DB', items: ['MSSQL', 'MySQL', 'PostgreSQL (PostGIS)'] },
+  { label: 'Web', items: ['React', 'TypeScript', 'Vite', 'Next.js'] },
 ];
 
 const lkDetails: DetailBlock[] = [
@@ -78,13 +77,22 @@ const lkDetails: DetailBlock[] = [
     ],
   },
   {
-    title: '국내·해외 결제 인프라 통합',
-    period: '2024 – 2025',
-    context: '30개국 이상의 결제 수단(PAYCO·KakaoPay·MYPG / SwipePay(QRIS)·Global Payments·NZ Payments·Spectra·Nayax·PAX)을 운영하며 통신 프로토콜이 RESTful API · RS232 · MDB로 제각각이라, 연 4건 이상 들어오는 신규 결제기 연동마다 호출부 분기 코드를 새로 써야 했습니다.',
+    title: '국내·해외 결제 인프라 통합 (단독 담당)',
+    period: '2024 – 2026.04',
+    context: '국내 VAN(KSNET·KICC·NICEPay), 간편결제(PAYCO·KakaoPay·MYPG), 해외 결제(SwipePay(QRIS)·Global Payments·NZ Payments·Spectra·Nayax·PAX), 현금까지 구현체 32개 규모의 결제 모듈이 30개국 이상 매장에서 쓰였고, 통신 프로토콜이 RESTful API · RS232 · MDB로 제각각이라, 연 4건 이상 들어오는 신규 결제기 연동마다 호출부 분기 코드를 새로 써야 했습니다.',
     points: [
       <>결제 모듈을 <code>IPayment</code> 단일 인터페이스로 추상화하고 프로토콜 어댑터(REST / Serial / MDB)와 결제사 구현체를 2단계로 분리. 신규 결제기는 어댑터 재사용 + 구현체 추가만으로 연동.</>,
       '사내망에서 직접 호출할 수 없는 KakaoPay용 Proxy 서버를 AWS EC2 + FastAPI + Docker로 설계·배포·운영. 결제사 IP 화이트리스트 적용.',
       '사내 결제 테스트 도구를 개발해 키오스크 실결제 검증을 데스크톱의 프로토콜별 요청/응답/취소 시뮬레이션으로 대체.',
+      '2025~2026년 미국 결제기, 중국 간편결제, 팔찌형 결제 수단 신규 연동.',
+    ],
+  },
+  {
+    title: '운영 인프라 · 정산 데이터',
+    points: [
+      '사내 Synology NAS 저장소 환경을 AWS S3로 전면 전환 (Synology 동기화 기능으로 이전).',
+      'ClickOnce 배포를 S3로 바꾸면서 배포 파일 업로드를 .NET CLI 도구로 자동화. 전체 매장 기기가 받는 파일이라 업로드 후 체크섬으로 원본과 같은지 확인.',
+      '정산 MSSQL 쿼리의 불필요한 OUTER JOIN과 서브쿼리를 걷어내, 같은 결과를 내면서 실행 시간을 2~3분에서 30초로 단축.',
     ],
   },
   {
@@ -152,7 +160,7 @@ export const jobs: Job[] = [
     summary: '인생네컷 키오스크 솔루션과 전사 결제 인프라 담당. 신규 솔루션("퀀텀") 설계와 레거시 유지보수를 병행.',
     points: [
       <>6년 된 .NET Framework + WinForms 레거시를 <strong>.NET 6 + WPF + DI 기반 구조</strong>로 재설계</>,
-      <>결제 디바이스 7종(REST · RS232 · MDB)을 <code>IPayment</code> <strong>단일 인터페이스</strong>로 통합해, 새 결제기는 구현체 추가만으로 연동</>,
+      <>구현체 32개 규모의 결제 모듈(REST · RS232 · MDB)을 <code>IPayment</code> <strong>단일 인터페이스</strong>로 통합해, 새 결제기는 구현체 추가만으로 연동</>,
       <>연 10건 이상 들어오는 콜라보 이벤트를 <strong>플러그인 구조</strong>로 바꿔, 리소스와 콘텐츠 로직만 작성하면 등록되게 함</>,
       <>Canon EDSDK · OpenCV · LUT · FFmpeg <strong>미디어 파이프라인</strong> 구축</>,
     ],
@@ -176,20 +184,36 @@ export const jobs: Job[] = [
   {
     period: '2020.08 — 2021.08',
     title: '구미전자정보기술원 · 위촉연구원',
-    meta: '실감미디어연구센터 · 1년 1개월',
-    summary: <>홀로그램 생성 오픈소스 라이브러리 <strong>OpenHolo</strong> 개발 참여. PAS · Angular Spectrum 알고리즘을 C++로 구현한 뒤 CUDA 커널로 포팅해 연산 시간을 줄이고, CPU/GPU 중 백엔드를 고를 수 있는 인터페이스 설계.</>,
+    meta: '실감미디어연구센터 · 1년 1개월 · 계약직',
+    summary: <>홀로그램 생성 오픈소스 라이브러리 <strong>OpenHolo</strong> 개발 참여. PAS(Phase-Added Stereogram) CPU 코드를 정리하고 CUDA GPU 경로를 추가했으며, Angular Spectrum 알고리즘 구현에 참여.</>,
     stack: ['C++', 'CUDA'],
   },
 ];
 
 export const projects: Project[] = [
   {
-    tag: '2026 · 개인',
+    tag: '2026 · 개인 · 출시 준비 중',
+    title: '마실',
+    subtitle: '전국 공중화장실 탐색 서비스',
+    href: 'https://toilets-dev.ironhiro.dev',
+    description: '공공데이터 53,579건의 개방시간 표기 2,127종을 표준 모델로 정리해 판정 불가를 9.5%에서 0.2%로 줄이고, 정규화에 실패한 값은 관리자 이슈 큐와 매핑 사전으로 처리하는 지도 서비스. 링크는 개발 서버.',
+    stack: ['React', 'TypeScript', 'ASP.NET Core 10', 'EF Core', 'PostgreSQL + PostGIS', 'Flutter', 'Docker', 'Azure Container Apps'],
+  },
+  {
+    tag: '2026 · 개인 · 운영 중',
     title: '태고 멀티뷰',
     href: 'https://multiview.ironhiro.dev',
-    description: '태고의 달인 매장들의 YouTube 라이브 방송을 한 화면에서 모아 보는 웹 서비스.',
+    description: '태고의 달인 매장들의 YouTube 라이브 방송을 한 화면에서 모아 보는 웹 서비스. 방송 상태 확인과 조회를 분리해 YouTube API 쿼터 사용량을 1/50로 줄였고, 테스트 340여 건을 CI로 실행.',
     links: [{ label: 'GitHub ↗', href: 'https://github.com/ironhiro/taiko-multiview' }],
     stack: ['ASP.NET Core (.NET 10)', 'React', 'TypeScript', 'Vite', 'YouTube Data API', 'Docker', 'Azure Container Apps', 'GitHub Actions'],
+  },
+  {
+    tag: '2026 · 개인',
+    title: 'YhLibrary',
+    subtitle: '장비 통신 .NET 라이브러리',
+    href: 'https://github.com/ironhiro/YhLibrary',
+    description: 'RS232 · MDB · TCP · gRPC 통신과 프레이밍 · 직렬화를 9개 모듈로 정리한 라이브러리. MSTest 304개.',
+    stack: ['C#', '.NET 10', 'RS232', 'MDB', 'TCP', 'gRPC', 'MessagePack', 'Protobuf'],
   },
   {
     tag: '2025 · 개인',
@@ -238,7 +262,8 @@ export const education: EducationItem[] = [
     notes: [
       '졸업 작품: Whereisit, 지역별 공중화장실 탐색 Android 앱 (6인 팀)',
       '교내 C/C++ 멘토링 활동',
-      '클라우드 기반 모듈식 BMS 적용 이차전지 배터리팩 개발 (산학 연구과제)',
+      '클라우드 기반 모듈식 BMS 적용 근거리 이동 수단용 이차전지 배터리 팩 개발 (연구과제, 2019.11 – 2020.08)',
+      '현장실습: 구미전자정보기술원 인턴, GPU(CUDA) 기반 C/C++ 고속화 과제 (2020.01 – 2020.06)',
     ],
   },
   { period: '2025.12', title: '정보처리기사', issuer: '한국산업인력공단' },
